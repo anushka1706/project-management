@@ -1,0 +1,8 @@
+<div class="user-dashboard">
+  <button mat-raised-button color="primary" class="create-btn" (click)="openDialog()">Add User</button>
+  <div class="users-list">
+    <div class="user-items" *ngFor="let users of allUsers">
+      <app-user-items [userDetails]="users"></app-user-items>
+    </div>
+  </div>
+</div>

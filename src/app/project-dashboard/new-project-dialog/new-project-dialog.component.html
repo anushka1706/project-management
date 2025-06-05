@@ -1,0 +1,32 @@
+<form class="new-project-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <p class="heading">Add new project</p>
+  <div class="fields">
+    <label for="" class="field-label">Name : </label>
+    <input type="text" formControlName="name" />
+    <p class="error" *ngIf="form.get('name')?.touched && form.invalid">Name is required</p>
+  </div>
+  <div class="fields">
+    <label for="" class="field-label">Description : </label>
+    <input type="text" formControlName="description" />
+  </div>
+  <div class="fields">
+    <label for="" class="field-label">Start Date : </label>
+    <input type="date" formControlName="startDate" />
+  </div>
+  <div class="fields">
+    <label for="" class="field-label">End Date : </label>
+    <input type="date" formControlName="endDate" />
+  </div>
+  <div class="actions">
+    <button
+      mat-raised-button
+      color="primary"
+      mat-dialog-close
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      Add
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+  </div>
+</form>

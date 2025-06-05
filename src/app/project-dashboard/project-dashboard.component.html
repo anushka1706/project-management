@@ -1,0 +1,10 @@
+<div class="project-dashboard-container">
+  <button mat-raised-button color="primary" (click)="openDialog()">
+    + Create new
+  </button>
+  <div class="project-list">
+    <div class="project-items" *ngFor="let items of allProjects">
+      <app-project-items [projectDetails]="items"></app-project-items>
+    </div>
+  </div>
+</div>

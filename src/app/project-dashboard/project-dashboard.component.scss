@@ -1,0 +1,17 @@
+.project-items {
+  width: 100%;
+  gap: 1rem;
+}
+.project-list {
+  width: 100%;
+  display: flex;
+}
+.project-dashboard-container {
+  width: 100%;
+  padding: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap:3rem;
+  align-items: start;
+}

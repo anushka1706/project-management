@@ -1,0 +1,43 @@
+.new-project-form {
+  padding: 2rem;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  gap: 1rem;
+}
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  align-items: start;
+  justify-content: start;
+}
+.field-label {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+input,select {
+  padding: 5px;
+  border-radius: 7px;
+  outline: none;
+  border: 2px solid grey;
+}
+.actions {
+  display: flex;
+  gap: 1rem;
+  align-self: center;
+  width: fit-content;
+  margin-top: 1rem;
+}
+.heading {
+  font-size: 2rem;
+  font-weight: 500;
+  color: rgb(43, 43, 215);
+}
+.error {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: rgb(185, 48, 48);
+}
