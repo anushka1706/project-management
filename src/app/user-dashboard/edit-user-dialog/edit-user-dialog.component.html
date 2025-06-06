@@ -1,1 +1,30 @@
-<p>edit-user-dialog works!</p>
+<form class="edit-user-form" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  <p class="heading">Edit user</p>
+  <div class="fields">
+    <label for="" class="field-label">Name : </label>
+    <input type="text" formControlName="name" />
+  </div>
+  <div class="fields">
+    <label for="" class="field-label">Email : </label>
+    <input type="text" formControlName="email" />
+  </div>
+  <div class="fields">
+    <label for="" class="field-label">Role : </label>
+    <select name="" id="" formControlName="role">
+      <option value="" *ngFor="let roles of options" [value]="roles">
+        {{ roles }}
+      </option>
+    </select>
+  </div>
+  <div class="actions">
+    <button
+      mat-raised-button
+      color="primary"
+      mat-dialog-close
+      type="submit"
+    >
+      Update
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close (click)="cancel()">Cancel</button>
+  </div>
+</form>

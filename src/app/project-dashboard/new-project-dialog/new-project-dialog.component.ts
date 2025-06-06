@@ -34,7 +34,7 @@ export class NewProjectDialogComponent implements OnInit {
       startDate: this.form.value.startDate,
       endDate: this.form.value.endDate,
       id: this.dataService.generateId(),
-      task: []
+      tasks: []
     }
     this.updateNewProject(data)
   }

@@ -1,0 +1,48 @@
+.view-container {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+.project-details {
+  background-color: #e7f5ff;
+  padding: 1rem;
+  border-radius: 7px;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.info {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgb(70, 70, 70);
+  span {
+    color: black;
+    font-size: 1.8rem;
+    font-weight: 550;
+  }
+}
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.date-task {
+  display: flex;
+  gap: 3rem;
+  align-items: start;
+}
+.task {
+  padding: 5px;
+  border-radius: 5px;
+  align-self: start;
+  background-color: rgb(157, 157, 251);
+}
+.add-btn {
+  align-self: start;
+}
+.task-container {
+  background-color: #e7f5ff;
+  padding: 1rem;
+  border-radius: 7px;
+}

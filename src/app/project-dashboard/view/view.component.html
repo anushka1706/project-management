@@ -1,6 +1,27 @@
-<div class="project-view">
-  <p class="info">{{ project["name"] }}</p>
-  <p class="info">{{ project["description"] }}</p>
-  <p class="info">{{ project["startDate"] }}</p>
-  <p class="info">{{ project["endDate"] }}</p>
+<div class="view-container">
+  <div class="project-details">
+    <div class="title">
+      <p class="info" >
+        Project : <span>{{ project['name'] }}</span>
+      </p>
+      <p class="info">
+        Description : <span>{{ project['description'] }}</span>
+      </p>
+    </div>
+    <div class="date-task">
+      <p class="info">
+        Start date : <span>{{ project['startDate'] }}</span>
+      </p>
+      <p class="info">
+        End date : <span>{{ project['endDate']}}</span>
+      </p>
+      <p class="info task">
+        Tasks : <span>{{ tasks }}</span>
+      </p>
+    </div>
+    <button mat-raised-button class="add-btn" color="primary" (click)="openDialog()">Add task</button>
+  </div>
+  <div class="tasks-container">
+    <app-task [allTasks]="allTasks"></app-task>
+  </div>
 </div>

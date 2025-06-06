@@ -1,4 +1,4 @@
-.edit-user-form {
+.new-task-form {
   padding: 2rem;
   border-radius: 7px;
   display: flex;
@@ -40,4 +40,7 @@ input,select {
   font-size: 1.2rem;
   font-weight: 500;
   color: rgb(185, 48, 48);
+}
+input,select{
+  width: 100%;
 }

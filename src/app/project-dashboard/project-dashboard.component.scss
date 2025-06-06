@@ -1,10 +1,13 @@
 .project-items {
   width: 100%;
   gap: 1rem;
+  width: 30%;
 }
 .project-list {
   width: 100%;
   display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 .project-dashboard-container {
   width: 100%;
@@ -12,6 +15,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap:3rem;
+  gap: 3rem;
   align-items: start;
 }

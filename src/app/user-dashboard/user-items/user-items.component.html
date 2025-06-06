@@ -1,5 +1,20 @@
 <div class="item-details">
-    <p>{{userDetails['name']}}</p>
-    <p>{{userDetails['email']}}</p>
-    <p>{{userDetails['role']}}</p>
+  <div class="info">
+      <p class="label">
+        Name : <span class="label-value">{{ userDetails["name"] }}</span>
+      </p>
+      <p class="label">
+        Email : <span class="label-value">{{ userDetails["email"] }}</span>
+      </p>
+      <p class="label">
+        Role : <span class="label-value">{{ userDetails["role"] }}</span>
+      </p>
+      <p class="label">
+        Tasks : <span class="label-value">{{ tasks }}</span>
+      </p>
+  </div>
+  <div class="actions">
+    <button mat-raised-button color="primary" (click)="openDialog()">Edit</button>
+    <button mat-raised-button color="warn" (click)="openDeleteDialog()">Delete</button>
+  </div>
 </div>

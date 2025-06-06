@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NewUserDialogComponent } from './new-user-dialog/new-user-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DataService } from 'shared/data.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -13,7 +14,9 @@ export class UserDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.allUsers = this.dataService.allUsers
-    console.log(this.allUsers)
+    // this.dataService.updatedUser.subscribe(data => {
+    //   data ? this.allUsers = data : []
+    // })
   }
 
   constructor(private dialog: MatDialog, private dataService: DataService) { }

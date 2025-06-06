@@ -1,0 +1,13 @@
+.task-container {
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+  width: 25%;
+  border-radius: 10px;
+  background-color: #dbe4ff;
+  padding: 2rem;
+}
+.task-wrapper {
+  display: flex;
+  gap: 2rem;
+}

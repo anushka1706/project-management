@@ -1,11 +1,20 @@
 <div class="items" (click)="onView()">
   <p class="heading">{{ projectDetails["name"] }}</p>
-  <p class="description">{{ projectDetails["description"] }}</p>
+  <p class="description">
+    Description : <span>{{ projectDetails["description"] }}</span>
+  </p>
   <p class="tasks">
     Tasks :
     <span class="task-count">{{ tasks }}</span>
   </p>
   <div class="actions">
-    <button mat-raised-button class="delete-btn" color="warn" (click)="onDelete()">Delete</button>
+    <button
+      mat-raised-button
+      class="delete-btn"
+      color="warn"
+      (click)="openDeleteDialog($event)"
+    >
+      Delete
+    </button>
   </div>
 </div>

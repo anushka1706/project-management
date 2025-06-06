@@ -1,8 +1,11 @@
 <div class="container">
   <div class="sidenav">
     <ul>
-      <li>
-        <a [routerLink]="'users'">Users</a>
+      <li routerLinkActive="active">
+        <a class="sidenav-link" [routerLink]="'users'">Users</a>
+      </li>
+      <li routerLinkActive="active">
+        <a class="sidenav-link" [routerLink]="'project-dashboard'">Projects dashboard</a>
       </li>
     </ul>
   </div>

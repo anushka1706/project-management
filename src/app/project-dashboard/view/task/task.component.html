@@ -1,0 +1,10 @@
+<div class="task-wrapper">
+    <div class="task-container" *ngFor="let status of status | keyvalue">
+      <p>Task status : {{ status.key }}</p>
+      <div class="tasks" *ngIf="status.value.length > 0">
+        <div *ngFor="let tasks of status.value">
+          <p>Task name : {{ tasks.name }}</p>
+        </div>
+      </div>
+    </div>
+</div>
