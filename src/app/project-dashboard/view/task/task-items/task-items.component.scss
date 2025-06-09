@@ -1,0 +1,12 @@
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(68, 68, 68);
+  border-radius: 8px;
+  padding: 1rem;
+  color: white;
+}
+.action {
+  display: flex;
+  gap: 1rem;
+}

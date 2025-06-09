@@ -1,7 +1,5 @@
-import { JsonpInterceptor } from '@angular/common/http';
-import { CSP_NONCE, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Project } from './project.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +12,11 @@ export class DataService {
   newProject: BehaviorSubject<{ [key: string]: any }> = new BehaviorSubject<{ [key: string]: any }>({})
   newUser: BehaviorSubject<{ [key: string]: any }> = new BehaviorSubject<{ [key: string]: any }>({})
   editUser: BehaviorSubject<{ [key: string]: any }> = new BehaviorSubject<{ [key: string]: any }>({})
-  newTask: BehaviorSubject<{ [key: string]: any }> = new BehaviorSubject<{ [key: string]: any }>({})
+  newTask: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   viewProject: BehaviorSubject<{ [key: string]: any }> = new BehaviorSubject<{ [key: string]: any }>({})
   isUpdatedUsers: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   updatedUser: BehaviorSubject<any[] | null> = new BehaviorSubject<any[] | null>([])
+  updatedTasks: BehaviorSubject<any[] | null> = new BehaviorSubject<any[] | null>([])
 
   constructor() {
     const projects = localStorage.getItem('projects')
@@ -48,6 +47,12 @@ export class DataService {
         this.allProjects.splice(index, 1)
       }
     })
+    this.allUsers.forEach(user => {
+      const taskIndex = user.task.indexOf((task: any) => task.projectId == id)
+      user.task.splice(taskIndex, 1)
+    })
+    localStorage.setItem('users', JSON.stringify(this.allUsers))
+    this.updatedUser.next(this.allUsers)
     localStorage.setItem('projects', JSON.stringify(this.allProjects))
   }
 
@@ -74,6 +79,14 @@ export class DataService {
         this.allUsers.splice(index, 1)
       }
     })
+    this.allProjects.forEach(project => {
+      for (let tasks of project.tasks) {
+        if (tasks.assignTo.id == id) {
+          tasks.assignTo = {}
+        }
+      }
+    })
+    localStorage.setItem('projects', JSON.stringify(this.allProjects))
     localStorage.setItem('users', JSON.stringify(this.allUsers))
   }
 
@@ -86,18 +99,80 @@ export class DataService {
     const updated = this.allProjects.find(project => project['id'] == id)
     this.viewProject.next(updated)
     this.newTask.next(task)
+    this.updatedTasks.next(updated['tasks'])
   }
 
-  addTaskToUser(userId: number, task: { [key: string]: any }) {
+  addTaskToUser(userId: number, task: { [key: string]: any }, projectId: number) {
     const user = this.allUsers.find(user => user['id'] == userId)
     user['task'].push({
       taskId: task['taskId'],
       name: task['name'],
       status: task['status'],
-      deadline: task['deadline']
+      deadline: task['deadline'],
+      projectId: +projectId
     })
     localStorage.setItem('users', JSON.stringify(this.allUsers))
-    // const updatedUser = this.allUsers.find(user => user['id'] == userId)
+    this.isUpdatedUsers.next(true)
+    this.newTask.next(true)
+  }
+
+  editTask(projectId: number, task: any) {
+    const project = this.allProjects.find(project => project['id'] == projectId)
+    const taskIndex = project?.['tasks'].findIndex((item: any) => item.taskId == task.taskId);
+    if (taskIndex !== -1 && project) {
+      project['tasks'][taskIndex] = task;
+    }
+    localStorage.setItem('projects', JSON.stringify(this.allProjects))
+    this.viewProject.next(project)
+  }
+  editUserTask(task: any) {
+
+  }
+  updateUserTask(userId: number, task: any, assignedFrom: number) {
+    const user = this.allUsers.find(user => user.id == userId)
+    user['task'].push(task);
+    const assignedFromUser = this.allUsers.find(user => user.id == assignedFrom)
+    if (assignedFromUser) {
+      const assignedFromTask = assignedFromUser?.['task'].findIndex((item: any) => item.taskId == task.taskId);
+      assignedFromUser.task.splice(assignedFromTask, 1)
+      console.log(this.allUsers)
+    }
+    localStorage.setItem('users', JSON.stringify(this.allUsers))
     this.isUpdatedUsers.next(true)
   }
+
+  deleteTask(taskId: number, projectId: number) {
+    this.allProjects.forEach(item => {
+      const index = item.tasks.findIndex((task: any) => task.taskId == taskId)
+      item.tasks.splice(index, 1)
+    })
+    this.allUsers.forEach(user => {
+      const index = user.task.findIndex((task: any) => task.taskId == taskId)
+      user.task.splice(index, 1)
+    })
+    const project = this.allProjects.find(project => project['id'] == projectId)
+    localStorage.setItem('projects', JSON.stringify(this.allProjects))
+    this.viewProject.next(project)
+    localStorage.setItem('users', JSON.stringify(this.allUsers))
+    this.isUpdatedUsers.next(true)
+  }
+changeTaskStatus(taskId: number, newStatus: string, projectId: number) {
+  const project = this.allProjects.find(p => p.id === projectId);
+  if (project) {
+    const task = project.tasks.find((t: any) => t.taskId === taskId);
+    if (task) {
+      task.status = newStatus;
+    }
+  }
+  this.allUsers.forEach(user => {
+    const userTask = user.task.find((t: any) => t.taskId === taskId);
+    if (userTask) {
+      userTask.status = newStatus;
+    }
+  });
+  localStorage.setItem('projects', JSON.stringify(this.allProjects));
+  localStorage.setItem('users', JSON.stringify(this.allUsers));
+  this.isUpdatedUsers.next(true);
+}
+
 }

@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'shared/data.service';
 import { NewTaskDialogComponent } from '../new-task-dialog/new-task-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-view',
@@ -15,6 +14,7 @@ export class ViewComponent implements OnInit {
   project: { [key: string]: any } = {}
   allTasks: any[] = []
   tasks: number = 0
+  status: any[] = []
   constructor(private route: ActivatedRoute, private dataService: DataService, private dialog: MatDialog) { }
 
   ngOnInit(): any {
@@ -24,9 +24,19 @@ export class ViewComponent implements OnInit {
     this.dataService.getProjectbyId(this.id)
     this.dataService.viewProject.subscribe(data => {
       this.project = data
-      this.tasks = this.project['tasks'].length > 0 ? this.project['tasks'].length : 0
+      this.tasks = this.project?.['tasks'].length > 0 ? this.project?.['tasks'].length : 0
       this.allTasks = this.project['tasks']
-      console.log(this.allTasks)
+      this.creatTaskGroup()
+    })
+  }
+
+  creatTaskGroup() {
+    this.status = []
+    this.allTasks.forEach(tasks => {
+      if (!this.status[tasks.status]) {
+        this.status[tasks.status] = []
+      }
+      this.status[tasks.status].push(tasks)
     })
   }
 
@@ -39,17 +49,10 @@ export class ViewComponent implements OnInit {
     dialogRef.afterClosed().subscribe(data => {
       if (data) {
         this.dataService.addTasks(this.project?.['id'], data)
-        this.dataService.addTaskToUser(data.assignTo.id,data)
+        this.dataService.addTaskToUser(data.assignTo.id, data,this.id)
+        this.creatTaskGroup()
       }
     })
-  }
-  updateProject(data: any[]) {
-    data.forEach(project => {
-      if (project?.id == this.id) {
-        this.project = project
-      }
-    }
-    )
   }
 }
 

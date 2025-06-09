@@ -1,1 +1,59 @@
-<p>edit-task-dialog works!</p>
+<form class="new-task-form" [formGroup]="editform" (ngSubmit)="onSubmit()">
+  <p class="heading">Edit Task</p>
+  <div class="fields">
+    <label for="" class="field-label">Name : </label>
+    <input type="text" formControlName="name" />
+    <p class="error" *ngIf="editform.get('name')?.touched && editform.invalid">
+      Name is required
+    </p>
+  </div>
+  <div class="fields">
+    <label for="" class="field-label">Description : </label>
+    <input type="text" formControlName="description" />
+  </div>
+  <div class="fields">
+    <label for="" class="field-label">Status : </label>
+    <select name="" id="" formControlName="status">
+      <option value="" *ngFor="let status of status" [value]="status">
+        {{ status }}
+      </option>
+    </select>
+  </div>
+  <div class="fields">
+    <label for="" class="field-label">Assign To : </label>
+    <input
+      type="text"
+      (input)="filterUsers($event)"
+      formControlName="assignTo"
+      matInput
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="onUserSelected($event.option.value)"
+      [displayWith]="displayUser"
+    >
+      <mat-option *ngFor="let user of filteredUsers" [value]="user">
+        {{ user.name }} ({{ user.email }})
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+  <div class="fields">
+    <label for="" class="field-label">Deadline : </label>
+    <input type="date" formControlName="deadline" />
+  </div>
+  <div class="actions">
+    <button
+      mat-raised-button
+      color="primary"
+      mat-dialog-close
+      type="submit"
+      [disabled]="editform.invalid"
+    >
+      Add
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close (click)="cancel()">
+      Cancel
+    </button>
+  </div>
+</form>

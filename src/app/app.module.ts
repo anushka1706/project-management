@@ -23,7 +23,9 @@ import { UserItemsComponent } from './user-dashboard/user-items/user-items.compo
 import { ConfirmDeleteDialogComponent } from './confirm-delete-dialog/confirm-delete-dialog.component';
 import { NewTaskDialogComponent } from './project-dashboard/new-task-dialog/new-task-dialog.component';
 import { EditTaskDialogComponent } from './project-dashboard/edit-task-dialog/edit-task-dialog.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TaskComponent } from './project-dashboard/view/task/task.component';
+import { TaskItemsComponent } from './project-dashboard/view/task/task-items/task-items.component';
 
 @NgModule({
   declarations: [
@@ -40,11 +42,13 @@ import { TaskComponent } from './project-dashboard/view/task/task.component';
     NewTaskDialogComponent,
     EditTaskDialogComponent,
     ViewComponent,
-    TaskComponent
+    TaskComponent,
+    TaskItemsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    DragDropModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatIconModule,

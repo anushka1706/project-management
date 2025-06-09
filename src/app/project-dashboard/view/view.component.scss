@@ -2,7 +2,11 @@
   padding: 2rem;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  width: 100%;
   gap: 3rem;
+  // background-color: red;
+  overflow: hidden;
 }
 .project-details {
   background-color: #e7f5ff;
@@ -41,8 +45,9 @@
 .add-btn {
   align-self: start;
 }
-.task-container {
-  background-color: #e7f5ff;
+.tasks-container {
   padding: 1rem;
   border-radius: 7px;
+  height: 80%;
+  width: 100%;
 }

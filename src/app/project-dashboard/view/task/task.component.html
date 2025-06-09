@@ -1,10 +1,27 @@
 <div class="task-wrapper">
-    <div class="task-container" *ngFor="let status of status | keyvalue">
-      <p>Task status : {{ status.key }}</p>
-      <div class="tasks" *ngIf="status.value.length > 0">
-        <div *ngFor="let tasks of status.value">
-          <p>Task name : {{ tasks.name }}</p>
-        </div>
+  <div
+    class="task-container"
+    *ngFor="let status of allTasks | keyvalue"
+    [class.done]="status.key === 'Done'"
+    [class.in-progress]="status.key === 'In Progress'"
+    [class.to-do]="status.key === 'To Do'"
+  >
+    <p class="heading">{{ status.key }}</p>
+    <div
+      class="tasks"
+      cdkDropList
+      [id]="getDropListId(status.key)"
+      [cdkDropListData]="status.value"
+      [cdkDropListConnectedTo]="connectedDropLists"
+      (cdkDropListDropped)="drop($event, status.key)"
+    >
+      <div *ngIf="status.value.length === 0" class="empty-placeholder">
+        Drop tasks here
+      </div>
+
+      <div *ngFor="let task of status.value" cdkDrag>
+        <app-task-items [task]="task" [projectId]="projectId"></app-task-items>
       </div>
     </div>
+  </div>
 </div>

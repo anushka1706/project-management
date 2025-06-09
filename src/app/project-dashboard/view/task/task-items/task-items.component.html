@@ -1,0 +1,11 @@
+<div class="task-item">
+  <div class="info">
+    <p class="heading">{{ task['name'] }}</p>
+    <p class="label">Deadline: <span>{{ task['deadline'] }}</span></p>
+     <p class="label">Assigned To : <span>{{ task['assignTo'].name }}</span></p>
+  </div>
+  <div class="action">
+    <mat-icon (click)="openEditDialog()" class="edit-icon" color="primary">edit</mat-icon>
+    <mat-icon (click)="openDeleteDialog()" class="delete-icon" color="warn">delete</mat-icon>
+  </div>
+</div>
