@@ -3,7 +3,9 @@
   <div class="fields">
     <label for="" class="field-label">Name : </label>
     <input type="text" formControlName="name" />
-    <p class="error" *ngIf="form.get('name')?.touched && form.invalid">Name is required</p>
+    <p class="error" *ngIf="form.get('name')?.touched && form.invalid">
+      Name is required
+    </p>
   </div>
   <div class="fields">
     <label for="" class="field-label">Description : </label>
@@ -19,7 +21,7 @@
   </div>
   <div class="actions">
     <button
-      mat-raised-button
+      class="add-btn"
       color="primary"
       mat-dialog-close
       type="submit"

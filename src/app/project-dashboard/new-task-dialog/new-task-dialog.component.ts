@@ -36,6 +36,7 @@ export class NewTaskDialogComponent implements OnInit {
     this.status = this.projectService.status
   }
   onSubmit() {
+    if (this.form.invalid) return;
     this.dialogRef.close(this.form.value)
   }
   cancel() {

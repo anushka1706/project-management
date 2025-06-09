@@ -20,32 +20,31 @@
     </select>
   </div>
   <div class="fields">
-      <label for="" class="field-label">Assign To : </label>
-      <input
-        type="text"
-        (input)="filterUsers($event)"
-        formControlName="assignTo"
-        matInput
-        [matAutocomplete]="auto"
-      />
-      <mat-autocomplete
-        #auto="matAutocomplete"
-        (optionSelected)="onUserSelected($event.option.value)"
-        [displayWith]="displayUser"
-      >
-        <mat-option *ngFor="let user of filteredUsers" [value]="user">
-          {{ user.name }} ({{ user.email }})
-        </mat-option>
-      </mat-autocomplete>
+    <label for="" class="field-label">Assign To : </label>
+    <input
+      type="text"
+      (input)="filterUsers($event)"
+      formControlName="assignTo"
+      matInput
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="onUserSelected($event.option.value)"
+      [displayWith]="displayUser"
+    >
+      <mat-option *ngFor="let user of filteredUsers" [value]="user">
+        {{ user.name }} ({{ user.email }})
+      </mat-option>
+    </mat-autocomplete>
   </div>
-    <div class="fields">
+  <div class="fields">
     <label for="" class="field-label">Deadline : </label>
     <input type="date" formControlName="deadline" />
   </div>
   <div class="actions">
     <button
-      mat-raised-button
-      color="primary"
+      class="add-btn"
       mat-dialog-close
       type="submit"
       [disabled]="form.invalid"
