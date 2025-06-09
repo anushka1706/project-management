@@ -46,7 +46,7 @@ export class TaskItemsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(value => {
       if (value) {
-        this.dataService.deleteTask(this.task['taskId'],this.projectId)
+        this.dataService.deleteTask(this.task['taskId'],this.projectId,this.task)
       }
     });
   }

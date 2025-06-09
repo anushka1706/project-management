@@ -141,14 +141,16 @@ export class DataService {
     this.isUpdatedUsers.next(true)
   }
 
-  deleteTask(taskId: number, projectId: number) {
+  deleteTask(taskId: number, projectId: number, task: any) {
     this.allProjects.forEach(item => {
       const index = item.tasks.findIndex((task: any) => task.taskId == taskId)
       item.tasks.splice(index, 1)
     })
     this.allUsers.forEach(user => {
-      const index = user.task.findIndex((task: any) => task.taskId == taskId)
-      user.task.splice(index, 1)
+      if (user.id == task.assignTo.id) {
+        const index = user.task.findIndex((task: any) => task.taskId == taskId)
+        user.task.splice(index,1)
+      }
     })
     const project = this.allProjects.find(project => project['id'] == projectId)
     localStorage.setItem('projects', JSON.stringify(this.allProjects))
@@ -156,23 +158,23 @@ export class DataService {
     localStorage.setItem('users', JSON.stringify(this.allUsers))
     this.isUpdatedUsers.next(true)
   }
-changeTaskStatus(taskId: number, newStatus: string, projectId: number) {
-  const project = this.allProjects.find(p => p.id === projectId);
-  if (project) {
-    const task = project.tasks.find((t: any) => t.taskId === taskId);
-    if (task) {
-      task.status = newStatus;
+  changeTaskStatus(taskId: number, newStatus: string, projectId: number) {
+    const project = this.allProjects.find(p => p.id === projectId);
+    if (project) {
+      const task = project.tasks.find((t: any) => t.taskId === taskId);
+      if (task) {
+        task.status = newStatus;
+      }
     }
+    this.allUsers.forEach(user => {
+      const userTask = user.task.find((t: any) => t.taskId === taskId);
+      if (userTask) {
+        userTask.status = newStatus;
+      }
+    });
+    localStorage.setItem('projects', JSON.stringify(this.allProjects));
+    localStorage.setItem('users', JSON.stringify(this.allUsers));
+    this.isUpdatedUsers.next(true);
   }
-  this.allUsers.forEach(user => {
-    const userTask = user.task.find((t: any) => t.taskId === taskId);
-    if (userTask) {
-      userTask.status = newStatus;
-    }
-  });
-  localStorage.setItem('projects', JSON.stringify(this.allProjects));
-  localStorage.setItem('users', JSON.stringify(this.allUsers));
-  this.isUpdatedUsers.next(true);
-}
 
 }
