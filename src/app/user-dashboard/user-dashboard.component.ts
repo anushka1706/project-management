@@ -14,9 +14,6 @@ export class UserDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.allUsers = this.dataService.allUsers
-    // this.dataService.updatedUser.subscribe(data => {
-    //   data ? this.allUsers = data : []
-    // })
   }
 
   constructor(private dialog: MatDialog, private dataService: DataService) { }

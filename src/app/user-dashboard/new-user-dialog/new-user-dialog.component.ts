@@ -12,7 +12,10 @@ import { UserServiceService } from '../user.service';
 export class NewUserDialogComponent implements OnInit {
   form !: FormGroup
   options !: string[]
-
+  nameErrorMessage: String = ''
+  nameError: boolean = false
+  emailErrorMessage: string = ''
+  emailError: boolean = false
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<NewUserDialogComponent>,
@@ -23,12 +26,14 @@ export class NewUserDialogComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       name: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       role: ['']
     });
     this.options = this.userService.roles
   }
-  
+  onCancel() {
+    this.dialogRef.close()
+  }
   onSubmit() {
     const data = {
       name: this.form.value.name,
@@ -44,5 +49,26 @@ export class NewUserDialogComponent implements OnInit {
     this.dataService.newUser.next(data)
     this.dataService.allUsers.push(data)
     localStorage.setItem("users", JSON.stringify(this.dataService.allUsers))
+  }
+  checkIfValid(e: Event) {
+    const input = e.target as HTMLInputElement;
+    const valueStr = input.value.trim();
+    if (valueStr.length < 3 && valueStr.length > 0) {
+      this.nameError = true
+      this.nameErrorMessage = 'Name should be minimum 3 characters'
+    }
+    else {
+      this.nameError = false
+      this.nameErrorMessage = ''
+    }
+  }
+  checkIfValidEmail(e: Event) {
+    if (this.form.get('email')?.invalid) {
+      this.emailError = true
+      this.emailErrorMessage = 'Please enter valid email'
+    } else {
+      this.emailError = false
+      this.emailErrorMessage = ''
+    }
   }
 }

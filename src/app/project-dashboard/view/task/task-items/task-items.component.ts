@@ -24,15 +24,17 @@ export class TaskItemsComponent implements OnInit {
       data: { task: this.task }
     });
     dialogRef.afterClosed().subscribe(data => {
-      data['taskId'] = this.task['taskId']
-      this.dataService.editTask(this.projectId, data)
-      const userTask = {
-        taskId: this.task['taskId'],
-        name: data['name'],
-        status: data['status'],
-        deadline: data['deadline']
+      if (data) {
+        data['taskId'] = this.task['taskId']
+        this.dataService.editTask(this.projectId, data)
+        const userTask = {
+          taskId: this.task['taskId'],
+          name: data['name'],
+          status: data['status'],
+          deadline: data['deadline']
+        }
+        this.dataService.updateUserTask(data['assignTo'].id, userTask, this.task['assignTo'].id)
       }
-      this.dataService.updateUserTask(data['assignTo'].id, userTask, this.task['assignTo'].id)
     })
   }
 
@@ -46,7 +48,7 @@ export class TaskItemsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(value => {
       if (value) {
-        this.dataService.deleteTask(this.task['taskId'],this.projectId,this.task)
+        this.dataService.deleteTask(this.task['taskId'], this.projectId, this.task)
       }
     });
   }

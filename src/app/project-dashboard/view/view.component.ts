@@ -14,7 +14,8 @@ export class ViewComponent implements OnInit {
   project: { [key: string]: any } = {}
   allTasks: any[] = []
   tasks: number = 0
-  status: any[] = []
+  status: { [key: string]: any } = {}
+
   constructor(private route: ActivatedRoute, private dataService: DataService, private dialog: MatDialog) { }
 
   ngOnInit(): any {
@@ -31,13 +32,14 @@ export class ViewComponent implements OnInit {
   }
 
   creatTaskGroup() {
-    this.status = []
+    this.status = { 'To Do': [], 'In Progress': [], 'Done': [] }
     this.allTasks.forEach(tasks => {
       if (!this.status[tasks.status]) {
         this.status[tasks.status] = []
       }
       this.status[tasks.status].push(tasks)
     })
+    console.log(this.status)
   }
 
   openDialog(): void {
@@ -49,7 +51,7 @@ export class ViewComponent implements OnInit {
     dialogRef.afterClosed().subscribe(data => {
       if (data) {
         this.dataService.addTasks(this.project?.['id'], data)
-        this.dataService.addTaskToUser(data.assignTo.id, data,this.id)
+        this.dataService.addTaskToUser(data.assignTo.id, data, this.id)
         this.creatTaskGroup()
       }
     })

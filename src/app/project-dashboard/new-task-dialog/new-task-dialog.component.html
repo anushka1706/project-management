@@ -2,10 +2,16 @@
   <p class="heading">Add new Task</p>
   <div class="fields">
     <label for="" class="field-label">Name : </label>
-    <input type="text" formControlName="name" />
-    <p class="error" *ngIf="form.get('name')?.touched && form.invalid">
-      Name is required
-    </p>
+    <input type="text" formControlName="name" (input)="checkIfValid($event)" />
+    <div class="error-wrapper">
+      <p
+        class="error"
+        *ngIf="form.get('name')?.touched && !this.form.get('name')?.value"
+      >
+        Name is required
+      </p>
+      <p class="name-error" *ngIf="nameError">{{ nameErrorMessage }}</p>
+    </div>
   </div>
   <div class="fields">
     <label for="" class="field-label">Description : </label>
@@ -37,6 +43,7 @@
         {{ user.name }} ({{ user.email }})
       </mat-option>
     </mat-autocomplete>
+    <p class="error" *ngIf="noUserError">{{noUserMessage}}</p>
   </div>
   <div class="fields">
     <label for="" class="field-label">Deadline : </label>
@@ -47,11 +54,11 @@
       class="add-btn"
       mat-dialog-close
       type="submit"
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || noUserError"
     >
       Add
     </button>
-    <button mat-raised-button color="warn" mat-dialog-close (click)="cancel()">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="cancel($event)">
       Cancel
     </button>
   </div>

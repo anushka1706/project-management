@@ -2,10 +2,18 @@
   <p class="heading">Edit Task</p>
   <div class="fields">
     <label for="" class="field-label">Name : </label>
-    <input type="text" formControlName="name" />
-    <p class="error" *ngIf="editform.get('name')?.touched && editform.invalid">
-      Name is required
-    </p>
+    <input type="text" formControlName="name" (input)="checkIfValid($event)"/>
+    <div class="error-wrapper">
+      <p
+        class="error"
+        *ngIf="
+          editform.get('name')?.touched && !this.editform.get('name')?.value
+        "
+      >
+        Name is required
+      </p>
+      <p class="name-error" *ngIf="nameError">{{ nameErrorMessage }}</p>
+    </div>
   </div>
   <div class="fields">
     <label for="" class="field-label">Description : </label>
@@ -37,6 +45,7 @@
         {{ user.name }} ({{ user.email }})
       </mat-option>
     </mat-autocomplete>
+    <p class="error" *ngIf="noUserError">{{ noUserMessage }}</p>
   </div>
   <div class="fields">
     <label for="" class="field-label">Deadline : </label>
@@ -44,11 +53,11 @@
   </div>
   <div class="actions">
     <button
-      mat-raised-button
+      class="add-btn"
       color="primary"
       mat-dialog-close
       type="submit"
-      [disabled]="editform.invalid"
+      [disabled]="editform.invalid || noUserError || nameError"
     >
       Add
     </button>

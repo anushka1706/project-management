@@ -2,17 +2,31 @@
   <p class="heading">Add new user</p>
   <div class="fields">
     <label for="" class="field-label">Name : </label>
-    <input type="text" formControlName="name" />
-    <p class="error" *ngIf="form.get('name')?.touched && form.invalid">
-      Name is required
-    </p>
+    <input type="text" formControlName="name" (input)="checkIfValid($event)" />
+    <div class="error-wrapper">
+      <p
+        class="error"
+        *ngIf="form.get('name')?.touched && !this.form.get('name')?.value"
+      >
+        Name is required
+      </p>
+      <p class="name-error" *ngIf="nameError">{{ nameErrorMessage }}</p>
+    </div>
   </div>
   <div class="fields">
     <label for="" class="field-label">Email : </label>
-    <input type="text" formControlName="email" />
-    <p class="error" *ngIf="form.get('name')?.touched && form.invalid">
-      Name is required
-    </p>
+    <input type="email" formControlName="email" />
+    <div
+      *ngIf="form.get('email')?.touched && form.get('email')?.invalid"
+      class="error"
+    >
+      <span *ngIf="form.get('email')?.errors?.['required']"
+        >Email is required</span
+      >
+      <span *ngIf="form.get('email')?.errors?.['email']"
+        >Please enter a valid email</span
+      >
+    </div>
   </div>
   <div class="fields">
     <label for="" class="field-label">Role : </label>
@@ -24,14 +38,14 @@
   </div>
   <div class="actions">
     <button
-      mat-raised-button
+      class="add-btn"
       color="primary"
       mat-dialog-close
       type="submit"
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || nameError || emailError"
     >
       Add
     </button>
-    <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="warn" mat-dialog-close (click)="onCancel()">Cancel</button>
   </div>
 </form>

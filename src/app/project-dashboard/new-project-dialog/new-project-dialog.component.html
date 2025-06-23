@@ -2,10 +2,16 @@
   <p class="heading">Add new project</p>
   <div class="fields">
     <label for="" class="field-label">Name : </label>
-    <input type="text" formControlName="name" />
-    <p class="error" *ngIf="form.get('name')?.touched && form.invalid">
-      Name is required
-    </p>
+    <input type="text" formControlName="name" (input)="checkIfValid($event)" />
+    <div class="error-wrapper">
+      <p
+        class="error"
+        *ngIf="form.get('name')?.touched && !this.form.get('name')?.value"
+      >
+        Name is required
+      </p>
+      <p class="name-error" *ngIf="nameError">{{ nameErrorMessage }}</p>
+    </div>
   </div>
   <div class="fields">
     <label for="" class="field-label">Description : </label>
@@ -25,7 +31,7 @@
       color="primary"
       mat-dialog-close
       type="submit"
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || nameError"
     >
       Add
     </button>

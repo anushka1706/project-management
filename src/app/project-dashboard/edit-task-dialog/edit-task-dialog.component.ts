@@ -17,6 +17,10 @@ export class EditTaskDialogComponent implements OnInit {
   status !: string[]
   selectedUsers: { [key: string]: any } = {}
   filteredUsers !: any[]
+  noUserError: boolean = false
+  noUserMessage: string = ''
+  nameErrorMessage: string = ''
+  nameError: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -50,13 +54,24 @@ export class EditTaskDialogComponent implements OnInit {
   filterUsers(event: Event): void {
     const input = event.target as HTMLInputElement;
     const query = input.value;
-    if (!query) {
+    if (query.length <= 0) {
       this.filteredUsers = [];
+      this.noUserError = true
+      this.noUserMessage = 'Please enter a username'
     } else {
+      this.noUserError = false
+      this.noUserMessage = ''
       this.filteredUsers = this.dataService.allUsers.filter(user =>
         user.name.toLowerCase().includes(query.toLowerCase()) ||
         user.email.toLowerCase().includes(query.toLowerCase())
       );
+      if (!this.filteredUsers.length || !this.editform.get('assignTo')) {
+        this.noUserError = true;
+        this.noUserMessage = 'No user found';
+      } else {
+        this.noUserError = false
+        this.noUserMessage = ''
+      }
     }
   }
 
@@ -67,5 +82,16 @@ export class EditTaskDialogComponent implements OnInit {
   displayUser(user: any): string {
     return user ? user.name : '';
   }
-
+  checkIfValid(e: Event) {
+    const input = e.target as HTMLInputElement;
+    const valueStr = input.value.trim();
+    if (valueStr.length < 3 && valueStr.length > 0) {
+      this.nameError = true
+      this.nameErrorMessage = 'Name should be minimum 3 characters'
+    }
+    else {
+      this.nameError = false
+      this.nameErrorMessage = ''
+    }
+  }
 }

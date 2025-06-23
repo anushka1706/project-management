@@ -1,7 +1,7 @@
 <div class="task-wrapper">
   <div
     class="task-container"
-    *ngFor="let status of allTasks | keyvalue"
+    *ngFor="let status of allTasks | keyvalue : sortStatuses"
     [class.done]="status.key === 'Done'"
     [class.in-progress]="status.key === 'In Progress'"
     [class.to-do]="status.key === 'To Do'"
@@ -18,7 +18,6 @@
       <div *ngIf="status.value.length === 0" class="empty-placeholder">
         Drop tasks here
       </div>
-
       <div *ngFor="let task of status.value" cdkDrag>
         <app-task-items [task]="task" [projectId]="projectId"></app-task-items>
       </div>

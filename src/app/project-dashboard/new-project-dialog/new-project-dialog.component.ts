@@ -11,7 +11,8 @@ import { DataService } from 'shared/data.service';
 
 export class NewProjectDialogComponent implements OnInit {
   form !: FormGroup
-
+  nameErrorMessage !: string
+  nameError: boolean = false
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<NewProjectDialogComponent>,
@@ -43,5 +44,17 @@ export class NewProjectDialogComponent implements OnInit {
     this.dataService.newProject.next(data)
     this.dataService.allProjects.push(data)
     localStorage.setItem("projects", JSON.stringify(this.dataService.allProjects))
+  }
+  checkIfValid(e: Event) {
+    const input = e.target as HTMLInputElement;
+    const valueStr = input.value.trim();
+    if (valueStr.length < 3 && valueStr.length > 0) {
+      this.nameError = true
+      this.nameErrorMessage = 'Name should be minimum 3 characters'
+    }
+    else {
+      this.nameError = false
+      this.nameErrorMessage = ''
+    }
   }
 }

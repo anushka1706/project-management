@@ -11,8 +11,8 @@
   flex-direction: column;
   gap: 5px;
   width: 100%;
-  align-items: start;
-  justify-content: start;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 .field-label {
   font-size: 1.5rem;

@@ -34,16 +34,16 @@
 .date-task {
   display: flex;
   gap: 3rem;
-  align-items: start;
+  align-items: flex-start;
 }
 .task {
   padding: 5px;
   border-radius: 5px;
-  align-self: start;
+  align-self: flex-start;
   background-color: rgb(157, 157, 251);
 }
 .add-btn {
-  align-self: start;
+  align-self: flex-start;
 }
 .tasks-container {
   padding: 1rem;

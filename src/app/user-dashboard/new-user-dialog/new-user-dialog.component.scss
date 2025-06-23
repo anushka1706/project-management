@@ -11,14 +11,29 @@
   flex-direction: column;
   gap: 5px;
   width: 100%;
-  align-items: start;
-  justify-content: start;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 .field-label {
   font-size: 1.5rem;
   font-weight: 500;
 }
-input,select {
+.add-btn {
+  padding: 5px 1rem;
+  border-radius: 5px;
+  color: white;
+  font-weight: 550;
+  font-size: 1.5rem;
+  background-color: rgb(177, 16, 94);
+  transition: background-color 0.2s;
+  border: none;
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(227, 32, 126);
+  }
+}
+input,
+select {
   padding: 5px;
   border-radius: 7px;
   outline: none;

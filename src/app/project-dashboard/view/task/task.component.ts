@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DataService } from 'shared/data.service';
+import { KeyValue } from '@angular/common';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -9,14 +10,17 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 })
 
 export class TaskComponent implements OnInit {
-  @Input() allTasks !: any[]
+  @Input() allTasks !: { [key: string]: any }
   @Input() projectId !: number
   connectedDropLists: string[] = [];
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.connectedDropLists = Object.keys(this.allTasks).map(key => this.getDropListId(key));
+    const desiredOrder = ['To Do', 'In Progress', 'Done'];
+    this.connectedDropLists = desiredOrder
+      .filter(status => (this.allTasks as any)[status])
+      .map(status => this.getDropListId(status));
   }
 
   getDropListId(statusKey: string): string {
@@ -45,5 +49,9 @@ export class TaskComponent implements OnInit {
       }
     }
   }
+  sortStatuses = (a: KeyValue<string, any[]>, b: KeyValue<string, any[]>) => {
+    const order = ['To Do', 'In Progress', 'Done'];
+    return order.indexOf(a.key) - order.indexOf(b.key);
+  };
 
 }
